@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Calculator 🎂</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .box {
+            background: white;
+            color: black;
+            padding: 20px;
+            width: 350px;
+            margin: 100px auto;
+            border-radius: 15px;
+            box-shadow: 0 0 15px gray;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 90%;
+        }
+
+        button {
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #wish {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>🎂 Age Calculator</h2>
+
+    <p id="today"></p>
+
+    <input type="date" id="dob"><br>
+
+    <button onclick="calculateAge()">Calculate Age</button>
+
+    <p id="result"></p>
+    <p id="wish"></p>
+</div>
+
+<script>
+
+// 📅 Show today's date
+let todayDate = new Date();
+document.getElementById("today").innerText =
+    "Today Date: " + todayDate.toDateString();
+
+function calculateAge() {
+    let dob = document.getElementById("dob").value;
+
+    if (dob === "") {
+        alert("Please select DOB");
+        return;
+    }
+
+    let birth = new Date(dob);
+    let today = new Date();
+
+    let years = today.getFullYear() - birth.getFullYear();
+    let months = today.getMonth() - birth.getMonth();
+    let days = today.getDate() - birth.getDate();
+
+    // Fix negative days
+    if (days < 0) {
+        months--;
+        let lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+
+    // Fix negative months
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    document.getElementById("result").innerText =
+        `Age: ${years} Years, ${months} Months, ${days} Days`;
+
+    // 🎉 Birthday wish
+    if (
+        today.getDate() === birth.getDate() &&
+        today.getMonth() === birth.getMonth()
+    ) {
+        document.getElementById("wish").innerText =
+            "🎉 Happy Birthday! 🎂";
+    } else {
+        document.getElementById("wish").innerText = "";
+    }
+}
+</script>
+
+</body>
+</html>
